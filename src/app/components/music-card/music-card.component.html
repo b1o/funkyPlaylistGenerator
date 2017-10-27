@@ -1,0 +1,15 @@
+<div class="music-item d-flex z-depth-1 w-100 m-3">
+  <div style="width: 128px; height: auto;" class="img p-1">
+    <img src="{{item.img}}" alt="{{item.name}}" class="img-fluid">
+  </div>
+  <div class="mr-2 p-1 w-100 info">
+    <div class="info-header d-flex flex-column">
+      <div class="name">{{item.name}}</div>
+      <small class="artist text-muted">{{item.artist}}</small>
+    </div>
+    <hr class="my-1">
+    <div class="preview">
+      <span class="text-info" *ngIf="!item.preview">No preview</span>
+    </div>
+  </div>
+</div>

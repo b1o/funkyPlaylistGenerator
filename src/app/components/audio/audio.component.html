@@ -1,0 +1,9 @@
+<form class="range-field">
+  <div class="track">
+    <div class="range-cloud" title="range" [ngClass]="{'visible': this.visibility, 'hidden': !this.visibility}" [ngStyle]="{'left': range + '%'}">
+      <span class="text-transform">{{range}}</span>
+    </div>
+  </div>
+  <input #slider step="1" name="range" type="range" min="0" max="100" (focus)="visibility = true" (blur)="visibility = false"
+    [(ngModel)]="range" (input)="change(slider.value)" (click)="coverage()">
+</form>

@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  spotifyClientID: 'c68e640cba9b4b7f923d48f633940fa5',
+  sporifySecret: '331b267483b14fe6a88988493adfed39'
 };

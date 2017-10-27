@@ -1,0 +1,30 @@
+<mdb-progress-bar *ngIf="showLoading" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <div class="md-form">
+        <input class="form-control" type="text" mdbActive [(ngModel)]="sentence">
+        <button class="btn btn-sm btn-success" mdbRippleRadius (click)="search()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="result">
+    <app-generator [items]="result"></app-generator>
+  </div>
+
+  <hr>
+  <span class="text-info">DEBUG</span>
+  <div class="row justify-content-center" style="position:relative">
+    <div class="col-12">
+      <div *ngIf="result.length" class="result row">
+        <div *ngFor="let item of result; trackBy: trackByFn" class="col-6">
+          <app-music-card [item]="item"></app-music-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="text-info">DEBUG</span>
+  <hr>
+
+</div>

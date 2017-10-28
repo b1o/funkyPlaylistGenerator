@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 
 var client_id = 'c68e640cba9b4b7f923d48f633940fa5'; // Your client id
 var client_secret = '331b267483b14fe6a88988493adfed39'; // Your secret
-var redirect_uri = 'http://localhost:3000/spotify'; // Your redirect uri
+var redirect_uri = 'https://protected-river-37269.herokuapp.com/spotify'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters

@@ -14,7 +14,6 @@ import { MDBBootstrapModules, MDBSpinningPreloader } from 'ng-mdb-pro';
 import { MusicSearchComponent } from './components/music-search/music-search.component';
 import { MusicCardComponent } from './components/music-card/music-card.component';
 import { AuthComponent } from './components/auth/auth.component';
-import { AudioComponent } from './components/audio/audio.component';
 import { GeneratorComponent } from './components/generator/generator.component';
 
 @NgModule({
@@ -23,7 +22,6 @@ import { GeneratorComponent } from './components/generator/generator.component';
     MusicSearchComponent,
     MusicCardComponent,
     AuthComponent,
-    AudioComponent,
     GeneratorComponent
   ],
   imports: [

@@ -6,5 +6,4 @@
 export const environment = {
   production: false,
   spotifyClientID: 'c68e640cba9b4b7f923d48f633940fa5',
-  sporifySecret: '331b267483b14fe6a88988493adfed39'
 };

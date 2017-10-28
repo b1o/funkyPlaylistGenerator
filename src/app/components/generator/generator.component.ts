@@ -1,3 +1,5 @@
+import { toMusicCard } from '../music-search/music-search.component';
+import { GeneratorService } from '../../services/generator.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GeneratorComponent implements OnInit {
 
-  constructor() { }
+  public result = [];
+
+  constructor(private generatorService: GeneratorService) { }
 
   ngOnInit() {
+    this.generatorService.resultStream
+      .subscribe(data => {
+        this.result = data.map(toMusicCard);
+      });
   }
 
 }

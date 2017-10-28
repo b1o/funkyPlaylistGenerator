@@ -29,21 +29,8 @@ export class MusicService {
     ];
 
 
-    this.networkService.get(url, params)
-      .subscribe((data: any) => {
+    return this.networkService.get(url, params)
 
-        if (this.previousTerm === term) {
-          this.currentOffset += data.tracks.items.length;
-        } else {
-          this.previousTerm = term;
-          this.currentOffset = data.tracks.items.length;
-        }
-
-        console.log(`got ${this.currentOffset} tracks`);
-        this.musicTracks.next(data);
-      });
-
-    return this.musicTracks;
   }
 
   private noop = () => { };

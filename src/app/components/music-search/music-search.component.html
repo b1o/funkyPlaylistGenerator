@@ -13,18 +13,6 @@
     <app-generator [items]="result"></app-generator>
   </div>
 
-  <hr>
-  <span class="text-info">DEBUG</span>
-  <div class="row justify-content-center" style="position:relative">
-    <div class="col-12">
-      <div *ngIf="result.length" class="result row">
-        <div *ngFor="let item of result; trackBy: trackByFn" class="col-6">
-          <app-music-card [item]="item"></app-music-card>
-        </div>
-      </div>
-    </div>
-  </div>
-  <span class="text-info">DEBUG</span>
-  <hr>
+
 
 </div>

@@ -12,6 +12,17 @@ import 'rxjs/add/operator/do';
 import * as _ from 'lodash';
 
 
+export function toMusicCard(item) {
+  const card: MusicCard = {
+    name: item.name,
+    img: item.album.images.filter(img => img.url != null)[0].url,
+    artist: item.artists[0].name,
+    preview: item.preview_url,
+    id: item.id
+  };
+  return card;
+}
+
 @Component({
   selector: 'app-music-search',
   templateUrl: './music-search.component.html',
@@ -27,11 +38,13 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
 
   constructor(private musicSerivce: MusicService, private generator: GeneratorService) { }
 
+
+
   ngOnInit() {
     this.sub = this.musicSerivce.tracks()
       .subscribe(data => {
         console.log('got tracks')
-        this.result = data.tracks.items.map(this.toMusicCard);
+        this.result = data.tracks.items.map(toMusicCard);
       });
   }
 
@@ -40,16 +53,7 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
     this.generator.parseResult(this.sentence);
   }
 
-  toMusicCard = (item) => {
-    const card: MusicCard = {
-      name: item.name,
-      img: item.album.images.filter(img => img.url != null)[0].url,
-      artist: item.artists[0].name,
-      preview: item.preview_url,
-      id: item.id
-    };
-    return card;
-  }
+
 
   trackByFn(index, item) {
     return item.id;

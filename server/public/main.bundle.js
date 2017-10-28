@@ -362,7 +362,7 @@ var _a, _b, _c;
 /***/ "../../../../../src/app/components/generator/generator.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  generator works!\n</p>\n"
+module.exports = "<hr>\n<div class=\"row justify-content-center\" style=\"position:relative\">\n  <div *ngIf=\"result.length\" class=\"result row\">\n    <div *ngFor=\"let item of result\" class=\"col-12\">\n      <app-music-card [item]=\"item\"></app-music-card>\n    </div>\n  </div>\n</div>\n<hr>\n"
 
 /***/ }),
 
@@ -389,7 +389,9 @@ module.exports = module.exports.toString();
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GeneratorComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__music_search_music_search_component__ = __webpack_require__("../../../../../src/app/components/music-search/music-search.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_generator_service__ = __webpack_require__("../../../../../src/app/services/generator.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -400,22 +402,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var GeneratorComponent = (function () {
-    function GeneratorComponent() {
+    function GeneratorComponent(generatorService) {
+        this.generatorService = generatorService;
+        this.result = [];
     }
     GeneratorComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.generatorService.resultStream
+            .subscribe(function (data) {
+            _this.result = data.map(__WEBPACK_IMPORTED_MODULE_0__music_search_music_search_component__["b" /* toMusicCard */]);
+        });
     };
     return GeneratorComponent;
 }());
 GeneratorComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["o" /* Component */])({
         selector: 'app-generator',
         template: __webpack_require__("../../../../../src/app/components/generator/generator.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/generator/generator.component.scss")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_generator_service__["a" /* GeneratorService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_generator_service__["a" /* GeneratorService */]) === "function" && _a || Object])
 ], GeneratorComponent);
 
+var _a;
 //# sourceMappingURL=generator.component.js.map
 
 /***/ }),
@@ -503,7 +515,7 @@ var _a;
 /***/ "../../../../../src/app/components/music-search/music-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<mdb-progress-bar *ngIf=\"showLoading\" class=\"progress primary-color-dark\" mode=\"indeterminate\"></mdb-progress-bar>\n<div class=\"container\">\n  <div class=\"row justify-content-center\">\n    <div class=\"col-8\">\n      <div class=\"md-form\">\n        <input class=\"form-control\" type=\"text\" mdbActive [(ngModel)]=\"sentence\">\n        <button class=\"btn btn-sm btn-success\" mdbRippleRadius (click)=\"search()\">Search</button>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"result\">\n    <app-generator [items]=\"result\"></app-generator>\n  </div>\n\n  <hr>\n  <span class=\"text-info\">DEBUG</span>\n  <div class=\"row justify-content-center\" style=\"position:relative\">\n    <div class=\"col-12\">\n      <div *ngIf=\"result.length\" class=\"result row\">\n        <div *ngFor=\"let item of result; trackBy: trackByFn\" class=\"col-6\">\n          <app-music-card [item]=\"item\"></app-music-card>\n        </div>\n      </div>\n    </div>\n  </div>\n  <span class=\"text-info\">DEBUG</span>\n  <hr>\n\n</div>\n"
+module.exports = "<mdb-progress-bar *ngIf=\"showLoading\" class=\"progress primary-color-dark\" mode=\"indeterminate\"></mdb-progress-bar>\n<div class=\"container\">\n  <div class=\"row justify-content-center\">\n    <div class=\"col-8\">\n      <div class=\"md-form\">\n        <input class=\"form-control\" type=\"text\" mdbActive [(ngModel)]=\"sentence\">\n        <button class=\"btn btn-sm btn-success\" mdbRippleRadius (click)=\"search()\">Search</button>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"result\">\n    <app-generator [items]=\"result\"></app-generator>\n  </div>\n\n\n\n</div>\n"
 
 /***/ }),
 
@@ -529,6 +541,7 @@ module.exports = module.exports.toString();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = toMusicCard;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MusicSearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_generator_service__ = __webpack_require__("../../../../../src/app/services/generator.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_music_service__ = __webpack_require__("../../../../../src/app/services/music.service.ts");
@@ -555,6 +568,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+function toMusicCard(item) {
+    var card = {
+        name: item.name,
+        img: item.album.images.filter(function (img) { return img.url != null; })[0].url,
+        artist: item.artists[0].name,
+        preview: item.preview_url,
+        id: item.id
+    };
+    return card;
+}
 var MusicSearchComponent = (function () {
     function MusicSearchComponent(musicSerivce, generator) {
         this.musicSerivce = musicSerivce;
@@ -562,23 +585,13 @@ var MusicSearchComponent = (function () {
         this.term = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Subject__["a" /* Subject */]();
         this.result = [];
         this.showLoading = false;
-        this.toMusicCard = function (item) {
-            var card = {
-                name: item.name,
-                img: item.album.images.filter(function (img) { return img.url != null; })[0].url,
-                artist: item.artists[0].name,
-                preview: item.preview_url,
-                id: item.id
-            };
-            return card;
-        };
     }
     MusicSearchComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sub = this.musicSerivce.tracks()
             .subscribe(function (data) {
             console.log('got tracks');
-            _this.result = data.tracks.items.map(_this.toMusicCard);
+            _this.result = data.tracks.items.map(toMusicCard);
         });
     };
     MusicSearchComponent.prototype.search = function () {
@@ -711,52 +724,106 @@ var GeneratorService = (function () {
     function GeneratorService(musicService) {
         var _this = this;
         this.musicService = musicService;
-        this.result = [];
-        this.allowedSearchResults = 200;
+        this.results = [];
+        this.resultStream = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["a" /* Subject */]();
+        this.allowedSearchResults = 100;
         this.currentSearchResults = 0;
-        this.done = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["a" /* Subject */]();
         this.currentIndex = 0;
-        this.done
-            .do(function (i) { return console.log(i); })
-            .filter(function (index) { return index !== 'done' || _this.currentIndex >= _this.words.length; })
-            .subscribe(function (index) {
-            console.log('%c searching for', 'color: blue', _this.words[_this.currentIndex]);
-            if (_this.currentIndex >= _this.words.length) {
-                console.log(_this.result);
-                return;
-            }
-            _this.searchForTerm(_this.words[_this.currentIndex])
+        this.done = new __WEBPACK_IMPORTED_MODULE_2_rxjs_Subject__["a" /* Subject */]();
+        this.done.subscribe(function (i) {
+            var term = _this.searchTerms[_this.currentIndex];
+            console.log('%c searching for ' + term, 'color: blue');
+            _this.musicService.searchMusic(term)
                 .subscribe(function (data) {
-                if (!_this.words[_this.currentIndex]) {
-                    return;
-                }
-                _this.currentSearchResults += data.tracks.items.length;
-                console.log('got data', data.tracks.items);
-                var found = false;
                 for (var _i = 0, _a = data.tracks.items; _i < _a.length; _i++) {
                     var item = _a[_i];
-                    if (item.name.toLowerCase() === _this.words[_this.currentIndex].toLowerCase()) {
-                        console.log('%c found item', 'background: #222; color: green', item);
-                        _this.result.push(item);
-                        _this.currentSearchResults = 0;
-                        found = true;
-                        _this.done.next(++_this.currentIndex);
+                    if (item.name.toLowerCase() === term.toLowerCase()) {
+                        console.log('%c found song ' + item.name, 'color: green');
+                        _this.results.push(item);
                         break;
                     }
                 }
-                if (!found) {
-                    console.log('%c couldnt find result for ' + _this.words[_this.currentIndex], 'color: red');
-                    _this.currentSearchResults = 0;
-                    _this.done.next(++_this.currentIndex);
+                _this.currentIndex++;
+                if (_this.currentIndex < _this.searchTerms.length) {
+                    _this.done.next();
+                }
+                else {
+                    console.log('songs', _this.results.map(function (item) { return item.name; }));
+                    var combos = _this.combinations(_this.results, 1);
+                    for (var _b = 0, combos_1 = combos; _b < combos_1.length; _b++) {
+                        var combo = combos_1[_b];
+                        var newSentence = combo.map(function (item) { return item.name; }).join(' ').toLocaleLowerCase();
+                        if (newSentence === _this.sentence.toLowerCase()) {
+                            console.log(combo);
+                            _this.resultStream.next(combo);
+                            break;
+                        }
+                    }
+                    _this.currentIndex = 0;
                 }
             });
         });
     }
+    GeneratorService.prototype.generatePlaylist = function (arr) {
+        for (var i = void 0; i < arr.length; i++) {
+            for (var j = void 0; j < arr.length; j++) {
+            }
+        }
+    };
     GeneratorService.prototype.parseResult = function (sentence) {
         this.sentence = sentence;
         this.words = sentence.trim().split(' ');
         console.log(this.done);
-        this.done.next(this.currentIndex);
+        this.results = [];
+        this.searchTerms = this.combine(this.words);
+        console.log(this.searchTerms);
+        this.done.next();
+    };
+    GeneratorService.prototype.combinations = function (a, min) {
+        var fn = function (n, src, got, all) {
+            if (n === 0) {
+                if (got.length > 0) {
+                    all[all.length] = got;
+                }
+                return;
+            }
+            for (var j = 0; j < src.length; j++) {
+                fn(n - 1, src.slice(j + 1), got.concat([src[j]]), all);
+            }
+            return;
+        };
+        var res = [];
+        for (var i = min; i < a.length; i++) {
+            fn(i, a, [], res);
+        }
+        res.push(a);
+        return res;
+    };
+    GeneratorService.prototype.combine = function (array) {
+        var result = [];
+        result.push(array);
+        for (var length = 2; length <= array.length; length++) {
+            for (var startIndex = 0; startIndex < array.length; startIndex++) {
+                var temp = [];
+                var count = startIndex;
+                for (var index = 0; index < length - 1; index++) {
+                    temp.push(array[count++]);
+                }
+                result.push(temp);
+            }
+        }
+        result = result.filter(function (a) {
+            return !a.includes(undefined);
+        });
+        return result.map(function (a) { return a.join(' '); });
+    };
+    GeneratorService.prototype.makeWord = function (indecies) {
+        var term = '';
+        for (var _i = 0, indecies_1 = indecies; _i < indecies_1.length; _i++) {
+            var index = indecies_1[_i];
+            term += this.words[index] + ' ';
+        }
+        return term.trim();
     };
     GeneratorService.prototype.searchForTerm = function (term) {
         return this.musicService.searchMusic(term);
@@ -806,7 +873,6 @@ var MusicService = (function () {
         return this.musicTracks.asObservable();
     };
     MusicService.prototype.searchMusic = function (term) {
-        var _this = this;
         var url = "https://api.spotify.com/v1/search";
         var params = [
             { key: 'q', value: term },
@@ -815,19 +881,7 @@ var MusicService = (function () {
             { key: 'limit', value: 50 },
             { key: 'offset', value: this.currentOffset }
         ];
-        this.networkService.get(url, params)
-            .subscribe(function (data) {
-            if (_this.previousTerm === term) {
-                _this.currentOffset += data.tracks.items.length;
-            }
-            else {
-                _this.previousTerm = term;
-                _this.currentOffset = data.tracks.items.length;
-            }
-            console.log("got " + _this.currentOffset + " tracks");
-            _this.musicTracks.next(data);
-        });
-        return this.musicTracks;
+        return this.networkService.get(url, params);
     };
     return MusicService;
 }());

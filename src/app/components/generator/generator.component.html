@@ -1,3 +1,9 @@
-<p>
-  generator works!
-</p>
+<hr>
+<div class="row justify-content-center" style="position:relative">
+  <div *ngIf="result.length" class="result row">
+    <div *ngFor="let item of result" class="col-12">
+      <app-music-card [item]="item"></app-music-card>
+    </div>
+  </div>
+</div>
+<hr>

@@ -1,4 +1,3 @@
-<mdb-progress-bar *ngIf="showLoading" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-8">
@@ -8,6 +7,8 @@
       </div>
     </div>
   </div>
+
+  <mdb-progress-bar *ngIf="showLoading" class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
 
   <div class="result">
     <app-generator [items]="result"></app-generator>

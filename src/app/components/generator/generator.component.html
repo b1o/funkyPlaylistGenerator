@@ -1,8 +1,14 @@
 <hr>
 <div class="row justify-content-center" style="position:relative">
-  <div *ngIf="result.length" class="result row">
+  <div *ngIf="!noResult" class="result row">
     <div *ngFor="let item of result" class="col-12">
       <app-music-card [item]="item"></app-music-card>
+    </div>
+  </div>
+  <div *ngIf="noResult" class="row justify-content-center">
+    <span class="text-info text-center">We couldn't find songs that match your sentence exactly, but here are some that might suit you</span>
+    <div class="col-12">
+      <app-music-card *ngFor="let item of result" [item]="item"></app-music-card>
     </div>
   </div>
 </div>

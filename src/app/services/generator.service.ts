@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 @Injectable()
 export class GeneratorService {
 
-
+  public generating: Subject<boolean> = new Subject<boolean>();
   public sentence: string;
   public words: Array<string>;
 
@@ -51,11 +51,13 @@ export class GeneratorService {
               if (newSentence === this.sentence.toLowerCase()) {
 
                 console.log(combo);
-
-                this.resultStream.next(combo);
-                break;
+                this.generating.next(false);
+                this.resultStream.next({ status: true, songs: combo });
+                return;
               }
             }
+            this.generating.next(false);
+            this.resultStream.next({ status: false, songs: this.results });
 
             this.currentIndex = 0;
           }
@@ -67,10 +69,11 @@ export class GeneratorService {
     this.sentence = sentence;
     this.words = sentence.trim().split(' ');
     this.results = [];
+    this.currentIndex = 0;
 
     this.searchTerms = this.getPossibleSearchTerms(this.words);
     console.log(this.searchTerms);
-
+    this.generating.next(true);
     this.done.next();
 
   }

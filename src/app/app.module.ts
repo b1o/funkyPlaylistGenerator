@@ -15,6 +15,8 @@ import { MusicSearchComponent } from './components/music-search/music-search.com
 import { MusicCardComponent } from './components/music-card/music-card.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { GeneratorComponent } from './components/generator/generator.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/common/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { GeneratorComponent } from './components/generator/generator.component';
     MusicSearchComponent,
     MusicCardComponent,
     AuthComponent,
-    GeneratorComponent
+    GeneratorComponent,
+    HomeComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -4,9 +4,16 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 
+const port = 3000;
+
 var client_id = 'c68e640cba9b4b7f923d48f633940fa5'; // Your client id
 var client_secret = '331b267483b14fe6a88988493adfed39'; // Your secret
-var redirect_uri = 'https://funkyplaylistgenerator.herokuapp.com/spotify'; // Your redirect uri
+var redirect_uri;
+if(process.env.NODE_ENV == 'production') {
+  redirect_uri = 'https://funkyplaylistgenerator.herokuapp.com/spotify'; // Your redirect uri
+} else {
+  redirect_uri ='http://localhost:' + port + '/spotify'
+}
 
 /**
  * Generates a random string containing numbers and letters
@@ -137,5 +144,5 @@ app.get('/refresh_token', function (req, res) {
   });
 });
 
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || port);
 console.log('started')

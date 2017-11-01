@@ -36,14 +36,21 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
   public sub;
   public sentence;
 
+  private loadingSub;
+
   constructor(private musicSerivce: MusicService, private generator: GeneratorService) { }
 
 
 
   ngOnInit() {
+    this.loadingSub = this.generator.generating
+      .subscribe(isGenerating => {
+        this.showLoading = isGenerating;
+      });
+
     this.sub = this.musicSerivce.tracks()
       .subscribe(data => {
-        console.log('got tracks')
+        console.log('got tracks');
         this.result = data.tracks.items.map(toMusicCard);
       });
   }

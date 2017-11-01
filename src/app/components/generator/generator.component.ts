@@ -10,13 +10,16 @@ import { Component, OnInit } from '@angular/core';
 export class GeneratorComponent implements OnInit {
 
   public result = [];
+  public noResult = false;
 
   constructor(private generatorService: GeneratorService) { }
 
   ngOnInit() {
     this.generatorService.resultStream
       .subscribe(data => {
-        this.result = data.map(toMusicCard);
+        console.log(data);
+        this.noResult = !data.status;
+        this.result = data.songs.map(toMusicCard);
       });
   }
 

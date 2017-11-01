@@ -1,3 +1,4 @@
+import { HomeComponent } from './components/home/home.component';
 import { MusicSearchComponent } from './components/music-search/music-search.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -5,6 +6,7 @@ import { NgModule } from '@angular/core';
 
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'generator', component: MusicSearchComponent },
 ];
